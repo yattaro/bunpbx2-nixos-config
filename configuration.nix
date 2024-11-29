@@ -19,6 +19,9 @@ in
 
   networking = {
     hostName = "bunpbx2";
+    firewall.allowedUDPPorts = [
+      5060
+    ];
   };
 
   time.timeZone = "America/New_York";
@@ -51,9 +54,45 @@ in
         ${asterisk-configuration.asterisk.extensions_conf}
       '';
       "pjsip.conf" = ''
-        ${asterisk-configuration.asterisk.extensions_conf}
+        ${asterisk-configuration.asterisk.pjsip_conf}
       '';
     };
+    useTheseDefaultConfFiles = [
+      "ari.conf"
+      "acl.conf"
+      "agents.conf"
+      "amd.conf"
+      "calendar.conf"
+      "cdr.conf"
+      "cdr_syslog.conf"
+      "cdr_custom.conf"
+      "cel.conf"
+      "cli_aliases.conf"
+      "confbridge.conf"
+      "dundi.conf"
+      "features.conf"
+      "heap.conf"
+      "iax.conf"
+      "pjsip.conf"
+      "pjsip_wizard.conf"
+      "phone.conf"
+      "phoneprov.conf"
+      "queues.conf"
+      "res_config_sqlite3.conf"
+      "res_parking.conf"
+      "statsd.conf"
+      "udptl.conf"
+      "unistim.conf"
+      "aeap.conf"
+      "followme.conf"
+      "indications.conf"
+      "pjproject.conf"
+      "pjsip_notify.conf"
+      "prometheus.conf"
+      "queuerules.conf"
+      "sorcery.conf"
+      "users.conf"
+    ];
   };
 
   system.stateVersion = "24.11";

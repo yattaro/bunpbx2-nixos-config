@@ -23,9 +23,6 @@ in
     exten => 33624,1,Dial(PJSIP/ata-client4, 30)
     exten => 33625,1,Dial(PJSIP/33625, 30)
 
-    [voipms-inbound]
-    exten => ${secrets.asterisk.did_number},1,Dial(PJSIP/33622&PJSIP/ata-client3&PJSIP/ata-client4&PJSIP/33625, 30)
-
     [voipms-outbound]
     exten => _1NXXNXXXXXX,1,Set(CALLERID(NUM)=${secrets.asterisk.did_number})
             same => n,Dial(PJSIP/''${EXTEN}@voipms)
@@ -39,6 +36,10 @@ in
     exten => _00.,1,Set(CALLERID(NUM)=${secrets.asterisk.did_number})
             same => n,Dial(PJSIP/''${EXTEN}@voipms)
             same => n,Hangup()
+
+
+    [voipms-inbound]
+    exten => ${secrets.asterisk.did_number},1,Dial(PJSIP/33622&PJSIP/ata-client3&PJSIP/ata-client4&PJSIP/33625, 30)
   '';
 
   asterisk.pjsip_conf = ''
@@ -50,6 +51,7 @@ in
     [voipms]
     type=registration
     transport=transport-udp
+    outbound_auth=voipms
     client_uri=sip:${secrets.asterisk.sip_user}@${secrets.asterisk.sip_server}:5060
     server_uri=sip:${secrets.asterisk.sip_server}:5060
 
@@ -58,6 +60,12 @@ in
     auth_type=userpass
     username=${secrets.asterisk.sip_user}
     password=${secrets.asterisk.sip_pass}
+
+    [voipms]
+    type=aor
+    contact=sip:${secrets.asterisk.sip_user}@${secrets.asterisk.sip_server}
+    quality_frequency=60
+    quality_timeout=6.0
 
     [voipms]
     type=endpoint
