@@ -1,6 +1,5 @@
 let
-  secrets = import ./secrets.nix {};
-  asterisk-configuration = import ./asterisk-configuration.nix {};
+  asterisk-configuration = import ./asterisk-configuration.nix;
 in
 { config, lib, pkgs, ... }:
 
@@ -27,8 +26,6 @@ in
 
   i18n.defaultLocale = "en_US.UTF-8";
 
-  services.xserver.enable = false;
-
   services.openssh = {
 	enable = true;
 	settings.PermitRootLogin = "no";
@@ -44,13 +41,18 @@ in
     vim
     wget
     tmux
+    git
   ];
 
   services.asterisk = {
     enable = true;
     confFiles = {
-      "extensions.conf" = ${asterisk-configuration.asterisk.extensions_conf};
-      "pjsip.conf" = ${asterisk-configuration.asterisk.extensions_conf};
+      "extensions.conf" = ''
+        ${asterisk-configuration.asterisk.extensions_conf}
+      '';
+      "pjsip.conf" = ''
+        ${asterisk-configuration.asterisk.extensions_conf}
+      '';
     };
   };
 

@@ -1,5 +1,5 @@
 let
-  secrets = import ./secrets.nix {};
+  secrets = import ./secrets.nix;
 in
 {
   asterisk.extensions_conf = ''
