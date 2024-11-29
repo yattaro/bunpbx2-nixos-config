@@ -3,6 +3,16 @@ let
 in
 {
   asterisk.extensions_conf = ''
+    [general]
+    static=yes
+    writeprotect=no
+    clearglobalvars=no
+    [globals]
+    CONSOLE=Console/dsp
+    IAXINFO=guest
+    TRUNK=DAHDI/G2
+    TRUNKMSD=1
+
     [default]
     include => voipms-inbound
     include => voipms-outbound
