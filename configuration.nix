@@ -56,6 +56,9 @@ in
       "pjsip.conf" = ''
         ${asterisk-configuration.asterisk.pjsip_conf}
       '';
+      "logger.conf" = ''
+        ${asterisk-configuration.asterisk.logger_conf}
+      '';
     };
     useTheseDefaultConfFiles = [
       "ari.conf"
@@ -83,15 +86,43 @@ in
       "statsd.conf"
       "udptl.conf"
       "unistim.conf"
+      "adsi.conf"
+      "alarmreceiver.conf"
+      "ast_debug_tools.conf"
+      "asterisk.adsi"
       "aeap.conf"
+      "ccss.conf"
+      "cdr_beanstalkd.conf"
+      "cli.conf"
+      "cli_permissions.conf"
+      "codecs.conf"
+      "enum.conf"
+      "extconfig.conf"
       "followme.conf"
+      "http.conf"
       "indications.conf"
+      "logger.conf"
+      "manager.conf"
+      "modules.conf"
+      "musiconhold.conf"
+      "muted.conf"
+      "osp.conf"
+      "phoneprov.conf"
       "pjproject.conf"
       "pjsip_notify.conf"
       "prometheus.conf"
       "queuerules.conf"
+      "resolver_unbound.conf"
+      "res_stun_monitor.conf"
+      "rtp.conf"
+      "say.conf"
+      "sla.conf"
+      "smdi.conf"
       "sorcery.conf"
+      "stasis.conf"
+      "stir_shaken.conf"
       "users.conf"
+      "vpb.conf"
     ];
   };
 

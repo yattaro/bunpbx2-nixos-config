@@ -36,6 +36,14 @@ in
     exten => _00.,1,Set(CALLERID(NUM)=${secrets.asterisk.did_number})
             same => n,Dial(PJSIP/''${EXTEN}@voipms)
             same => n,Hangup()
+    ;exten => _1NXXNXXXXXX,1,Dial(PJSIP/''${EXTEN}@voipms)
+    ;exten => _1NXXNXXXXXX,n,Hangup()
+    ;exten => _NXXNXXXXXX,1,Dial(PJSIP/1''${EXTEN}@voipms)
+    ;exten => _NXXNXXXXXX,n,Hangup()
+    ;exten => _011.,1,Dial(PJSIP/''${EXTEN}@voipms)
+    ;exten => _011.,n,Hangup()
+    ;exten => _00.,1,Dial(PJSIP/''${EXTEN}@voipms)
+    ;exten => _00.,n,Hangup()
 
 
     [voipms-inbound]
@@ -64,8 +72,8 @@ in
     [voipms]
     type=aor
     contact=sip:${secrets.asterisk.sip_user}@${secrets.asterisk.sip_server}
-    quality_frequency=60
-    quality_timeout=6.0
+    qualify_frequency=60
+    qualify_timeout=6.0
 
     [voipms]
     type=endpoint
@@ -176,5 +184,11 @@ in
     [33625]
     type=aor
     max_contacts=1
+  '';
+  asterisk.logger_conf = ''
+    [general]
+    [logfiles]
+    console => notice,warning,error
+    messages => notice,warning,error
   '';
 }
