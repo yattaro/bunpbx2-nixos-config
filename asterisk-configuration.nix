@@ -14,6 +14,8 @@ in
     TRUNKMSD=1
 
     [default]
+    exten => 5555533626,1,Dial(PJSIP/33626, 30)
+    exten => 5555566666,1,Dial(PJSIP/33666, 30)
     include => voipms-inbound
     include => voipms-outbound
 
@@ -22,6 +24,8 @@ in
     exten => 33623,1,Dial(PJSIP/ata-client3, 30)
     exten => 33624,1,Dial(PJSIP/ata-client4, 30)
     exten => 33625,1,Dial(PJSIP/33625, 30)
+    exten => 33626,1,Dial(PJSIP/33626, 30)
+    exten => 33666,1,Playback(/srv/media/ghost/ghost''${RAND(1,38)})
 
     [voipms-outbound]
     exten => _1NXXNXXXXXX,1,Set(CALLERID(NUM)=${secrets.asterisk.did_number})
@@ -47,7 +51,7 @@ in
 
 
     [voipms-inbound]
-    exten => ${secrets.asterisk.did_number},1,Dial(PJSIP/33622&PJSIP/ata-client3&PJSIP/ata-client4&PJSIP/33625, 30)
+    exten => ${secrets.asterisk.did_number},1,Dial(PJSIP/33622&PJSIP/ata-client3&PJSIP/ata-client4&PJSIP/33625&PJSIP/33626, 30)
   '';
 
   asterisk.pjsip_conf = ''
@@ -91,9 +95,9 @@ in
     identify_by=ip
 
     [voipms]
-    type=identity
+    type=identify
     endpoint=voipms
-    match=${secrets.asterisk.sip_server_ip}
+    match=${secrets.asterisk.sip_server}
 
     [33621]
     type=endpoint
@@ -182,6 +186,26 @@ in
     password=password
 
     [33625]
+    type=aor
+    max_contacts=1
+
+    [33626]
+    type=endpoint
+    context=default
+    disallow=all
+    allow=ulaw
+    auth=33626-auth
+    aors=33626
+    force_rport=no
+    rewrite_contact=no
+
+    [33626-auth]
+    type=auth
+    auth_type=userpass
+    username=33626
+    password=password
+
+    [33626]
     type=aor
     max_contacts=1
   '';

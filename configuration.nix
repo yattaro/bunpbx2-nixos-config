@@ -21,6 +21,7 @@ in
     hostName = "bunpbx2";
     firewall.allowedUDPPorts = [
       5060
+      69 # nice
     ];
   };
 
@@ -46,6 +47,13 @@ in
     tmux
     git
   ];
+
+  services.atftpd = {
+    enable = true;
+    extraOptions = [
+      "--bind-addres 192.168.125.4"
+    ];
+  };
 
   services.asterisk = {
     enable = true;
